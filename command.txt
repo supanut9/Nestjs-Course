@@ -1,0 +1,79 @@
+- INIT
+npm install @nestjs/common@7.6.17 @nestjs/core@7.6.17 @nestjs/platform-express@7.6.17 reflect-metadata@0.1.13 typescript@4.3.2 
+
+- Nest CLI
+npm install -g @nestjs/cli
+nest new <project_name>
+
+- Create Module with Nest CLI
+nest generate module <module_name>
+nest generate controller <path/name> --flat (--flat : dont' create an extra folder called 'controllers')
+
+
+*********************************************************************************************
+
+Scratch  - Introduct to Nest 
+
+*********************************************************************************************
+
+Messages    - DTO(Data Transfer Object)
+            - DI(Dependency Injection) => for reducing amount of work (for nested classes calling each other)
+                - import { Injectable } from '@nestjs/common' -> Decorator for class that can be able to inject
+            - Decorator  => from '@nestjs/common'
+                - class     => Controller
+                - method    => Get, Post
+                - argument  => Body, Param
+            - Pipeline (Request & Response)
+                Pipe    (data validation from request) -> using class-validator library
+                Guard   (is user authenticated) 
+                Controller (Routing)
+                Service (run some bussiness logic) 
+                Repository (access a database)
+            - Read / Write File
+                - import { readFile, writeFile } from 'fs/promises';
+            - '@nestjs/common'
+                - There are many useful function such as 'NotFoundException' to response for not found data
+
+*********************************************************************************************
+
+Module      - Module Structure (focusing on Module management)
+	
+*********************************************************************************************
+
+My Car Value	
+		- ValidationPipe({ whitelist:true}) -> not related attached data in body will be prevent in request body
+			If you set only userName and password to be attached with body, other property will be eliminate
+
+		- type
+			 * Make all properties in T optional
+ */
+type Partial<T> = {
+    [P in keyof T]?: T[P];
+};
+		- TypeORM  (save and remove executing event listener -> @AfterUpdate, ....)
+			-> findOne, find then save   to update
+			-> findOne, find then remove to remove
+			-> creat then save to add
+
+		- Hooks => decorator for entity (to do something based on trigger hooks)
+		- Serialization -> convert object into byte-stream to be able to transfer or store
+		- implements vs extends
+			- implements => <class> implements <interface> 	-> this class should satisfy the interface that implement
+			- extends    => <class> extends    <SuperClass> -> this class inherit properties and methods from Super class
+		- Password Hashing (add salting to prevent rainbow table attack)
+		- Cookie (cookie-session) add in middleware (main.ts -> app.use())
+		- Custom Decorator (context is incomming request)
+		- ParamDecorator is out of DI system, so we need to use Interceptor to get access to service
+		- to make Injectable 
+			1. add @Injectable()
+			2. add Class inside providers list in module
+		- Globally, Locally scoped Interceptors
+		- Guard -> can apply for  (apply through Decorator)
+				- Entirely App
+				- Particular Controller
+				- Particular Module
+		- Authentication VS Authorization
+			- Authentication -> Figure out who is making a request
+			- Authorization  -> Figure out if the person making the request is allowed to make it
+		- Interceptors, Guards, Middlewares
+
